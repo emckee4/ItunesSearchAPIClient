@@ -13,9 +13,9 @@ public struct ItunesLookupRequest:ItunesRequest {
     public var idType:IDType
     public var ids:[String]
     public var entity:ItunesLookupEntities?
-    public var sortRecent:Bool = false
+    public var sortRecent:Bool
     
-    public var limit:Int
+    public var limit:Int = 50
     public var baseURL:URL = URL(string:"https://itunes.apple.com/")!
     public var additionalQueryItems:[URLQueryItem]?
     public var additionalHeaderFields:[String:String]?
@@ -25,14 +25,11 @@ public struct ItunesLookupRequest:ItunesRequest {
     public var language: String?
 
 
-    public init(idType:IDType, ids:[String], entity:ItunesLookupEntities? = nil, limit:Int = 50, baseURL:URL? =  nil) {
+    public init(idType:IDType, ids:[String], entity:ItunesLookupEntities? = nil, sortRecent:Bool = false) {
         self.idType = idType
         self.ids = ids
         self.entity = entity
-        self.limit = limit
-        if let url = baseURL {
-            self.baseURL = url
-        }
+        self.sortRecent = sortRecent
     }
     
     public func urlRequest() -> URLRequest {
