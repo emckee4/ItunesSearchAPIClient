@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ItunesSearchErrors:Error {
+public enum ItunesSearchError:Error {
     case network(_ underlyingError:Error? = nil)
     case badResponse(_ status: Int, message: String? = nil)
     case parsing(_ underlyingError:Error? = nil)

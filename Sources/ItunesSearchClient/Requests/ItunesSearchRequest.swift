@@ -10,8 +10,6 @@ import Foundation
 public struct ItunesSearchRequest:ItunesRequest {
 
     public var term: String = ""
-    ///The two-letter country code for the store you want to search. The search uses the default store front for the specified country. For example: US. The default is US.
-    public var country: String? = "US"
     ///The media type you want to search for. For example: movie. The default is all.
     public var media: String {
         return searchParameters.stringTerms.media
@@ -25,21 +23,24 @@ public struct ItunesSearchRequest:ItunesRequest {
         return searchParameters.stringTerms.attribute
     }
     public var searchParameters:ItunesSearchParameters
-    public var limit: Int
-    public var language: String?
-    //var version Int
     public var explicit: Bool?
+    
+    public var limit: Int = 50
     public var baseURL: URL = URL(string:"https://itunes.apple.com/")!
+    ///The two-letter country code for the store you want to search. The search uses the default store front for the specified country. For example: US. The default is US.
+    public var country: String? = "US"
+    public var language: String?
     public var additionalQueryItems:[URLQueryItem]?
     public var additionalHeaderFields:[String:String]?
     
-    public init(term:String, searchParameters:ItunesSearchParameters, limit:Int = 50, baseURL:URL? =  nil) {
+    public var offset:Int?
+    
+    public init(term:String, searchParameters:ItunesSearchParameters, explicit:Bool? = nil, limit:Int = 50, offset:Int? = nil) {
         self.term = term
         self.searchParameters = searchParameters
+        self.explicit = explicit
         self.limit = limit
-        if let url = baseURL {
-            self.baseURL = url
-        }
+        self.offset = offset
     }
     
     public func urlRequest() -> URLRequest {
@@ -50,6 +51,9 @@ public struct ItunesSearchRequest:ItunesRequest {
             URLQueryItem(name: "entity", value: entity),
             URLQueryItem(name: "limit", value: String(limit))
         ]
+        if let offset = self.offset {
+            queryItems.append(URLQueryItem(name: "offset", value: String(offset)))
+        }
         if let country = self.country {
             queryItems.append(URLQueryItem(name: "country", value: country))
         }

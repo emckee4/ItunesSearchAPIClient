@@ -44,6 +44,8 @@ struct ResultDecodingWrapper:Decodable {
                     self.content = try MusicCollectionResultItem(from: decoder)
                 case .TVSeason:
                     self.content = try TVSeasonCollectionResultItem(from: decoder)
+                case .Compilation:
+                    self.content = try CompilationResultItem(from: decoder)
                 default:
                     throw ItunesSearchResultErrors.unsupportedType(description:"wrapperType:\(wrapperType), collectionType:\(collectionType?.rawValue ?? "<no collectionType>")")
                 }

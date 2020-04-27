@@ -11,6 +11,7 @@ import Foundation
 public enum ItunesCollectionType:Decodable, RawRepresentable {
     case Album
     case TVSeason
+    case Compilation
     
     case other(String)
     
@@ -19,6 +20,7 @@ public enum ItunesCollectionType:Decodable, RawRepresentable {
         switch self {
         case .Album: return "Album"
         case .TVSeason: return "TV Season"
+        case .Compilation: return "Compilation"
         case .other(let str): return str
         }
     }
@@ -27,6 +29,7 @@ public enum ItunesCollectionType:Decodable, RawRepresentable {
         switch rawValue {
         case "Album": self = .Album
         case "TV Season": self = .TVSeason
+        case "Compilation": self = .Compilation
             
         default: self = .other(rawValue)
         }

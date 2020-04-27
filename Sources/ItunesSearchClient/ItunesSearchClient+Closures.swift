@@ -11,7 +11,7 @@ extension ItunesSearchClient {
 
     @discardableResult
     public func performSearch(request:ItunesRequest,
-                              completion:@escaping (Result<ItunesSearchResults, ItunesSearchErrors>)->()
+                              completion:@escaping (Result<ItunesSearchResults, ItunesSearchError>)->()
     ) -> URLSessionDataTask {
         
         let urlReq = request.urlRequest()
@@ -35,7 +35,7 @@ extension ItunesSearchClient {
     @discardableResult
     public func performTypedSearch<T:ResultItem>(request:ItunesRequest,
                                                    resultType:T.Type,
-                                                   completion:@escaping (Result<ItunesTypedSearchResults<T>, ItunesSearchErrors>)->()
+                                                   completion:@escaping (Result<ItunesTypedSearchResults<T>, ItunesSearchError>)->()
     ) -> URLSessionDataTask {
         
         let urlReq = request.urlRequest()
@@ -56,7 +56,7 @@ extension ItunesSearchClient {
         return task
     }
     
-    private func parseResponse(_ data:Data?, _ response:URLResponse?, _ error:Error?) -> Result<Data, ItunesSearchErrors> {
+    private func parseResponse(_ data:Data?, _ response:URLResponse?, _ error:Error?) -> Result<Data, ItunesSearchError> {
         let status = (response as? HTTPURLResponse)?.statusCode ?? -1
         guard error == nil else {
             return .failure(mapError(error!))
@@ -71,10 +71,10 @@ extension ItunesSearchClient {
         return .success(data!)
     }
     
-    private func mapError(_ error:Error) -> ItunesSearchErrors {
+    private func mapError(_ error:Error) -> ItunesSearchError {
         switch error {
-        case is ItunesSearchErrors:
-            return error as! ItunesSearchErrors
+        case is ItunesSearchError:
+            return error as! ItunesSearchError
         case is URLError:
             return .network(error)
         case is DecodingError:

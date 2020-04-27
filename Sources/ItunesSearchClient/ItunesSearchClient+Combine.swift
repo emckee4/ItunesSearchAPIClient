@@ -11,7 +11,7 @@ import Combine
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension ItunesSearchClient {
     
-    public func searchPublisher(request:ItunesRequest, verbose:Bool=false) -> AnyPublisher<ItunesSearchResults, ItunesSearchErrors> {
+    public func searchPublisher(request:ItunesRequest, verbose:Bool=false) -> AnyPublisher<ItunesSearchResults, ItunesSearchError> {
         let urlReq = request.urlRequest()
         if verbose {
             print("Performing request with: \(urlReq)")
@@ -25,7 +25,7 @@ extension ItunesSearchClient {
                 }
                 guard status >= 200 && status < 300 else {
                     let message = String(data:data, encoding:.utf8)
-                    throw ItunesSearchErrors.badResponse(status, message: message)
+                    throw ItunesSearchError.badResponse(status, message: message)
                 }
                 return data
         }
@@ -39,10 +39,10 @@ extension ItunesSearchClient {
                     throw error
                 }
             })
-        .mapError { (error) -> ItunesSearchErrors in
+        .mapError { (error) -> ItunesSearchError in
             switch error {
-            case is ItunesSearchErrors:
-                return error as! ItunesSearchErrors
+            case is ItunesSearchError:
+                return error as! ItunesSearchError
             case is URLError:
                 return .network(error)
             case is DecodingError:
@@ -56,7 +56,7 @@ extension ItunesSearchClient {
     
     ///Filters unexpected or malformed results more gracefully.
     ///ResultCount will still indicate the total number of results returned from the server rather than the number successfully decoded.
-    public func typedSearchPublisher<T:ResultItem>(request:ItunesRequest, resultType:T.Type, verbose:Bool=false) -> AnyPublisher<ItunesTypedSearchResults<T>, ItunesSearchErrors> {
+    public func typedSearchPublisher<T:ResultItem>(request:ItunesRequest, resultType:T.Type, verbose:Bool=false) -> AnyPublisher<ItunesTypedSearchResults<T>, ItunesSearchError> {
         let urlReq = request.urlRequest()
         if verbose {
             print("Performing request with: \(urlReq)")
@@ -70,15 +70,15 @@ extension ItunesSearchClient {
                 }
                 guard status >= 200 && status < 300 else {
                     let message = String(data:data, encoding:.utf8)
-                    throw ItunesSearchErrors.badResponse(status, message: message)
+                    throw ItunesSearchError.badResponse(status, message: message)
                 }
                 return data
         }
         .decode(type: ItunesTypedSearchResults<T>.self, decoder: decoder)
-        .mapError { (error) -> ItunesSearchErrors in
+        .mapError { (error) -> ItunesSearchError in
             switch error {
-            case is ItunesSearchErrors:
-                return error as! ItunesSearchErrors
+            case is ItunesSearchError:
+                return error as! ItunesSearchError
             case is URLError:
                 return .network(error)
             case is DecodingError:
