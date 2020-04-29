@@ -8,8 +8,6 @@
 import Foundation
 
 public enum ItunesResultKind:Decodable, RawRepresentable {
-
-    
     case podcast
     case movie
     case feature_movie

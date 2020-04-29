@@ -63,7 +63,7 @@ class MusicSearch: NetworkedTests {
                     testExpectation.fulfill()
                 }) { (output) in
                     XCTAssert(output.results.count > 0)
-                    XCTAssert(output.results.reduce(true) {$0 && ($1 is MusicCollectionResultItem || $1 is CompilationResultItem)})
+                    XCTAssert(output.results.reduce(true) {$0 && ($1 is MusicCollectionResultItem || $1 is CollectionResultItem)})
             }
         .store(in: &subscriptions)
         wait(for: [testExpectation], timeout: 4)

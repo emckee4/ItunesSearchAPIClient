@@ -7,9 +7,8 @@
 
 import Foundation
 
-public protocol ResultItem:Decodable, ReflectedStringConvertible {
-    var wrapperType:ItunesWrapperType {get}
+public class ResultItem:Decodable, ReflectedStringConvertible, Identifiable {
+    public var wrapperType:ItunesWrapperType
+    ///The identifiable id is computed from the relevent field in the concrete result item
+    public var id:Int {return 0}
 }
-
-
-

@@ -18,7 +18,6 @@ public struct ItunesSearchResults:Decodable {
         let vals = try values.decode([ResultDecodingWrapper].self, forKey: .results)
         self.results = vals.map{$0.content}
     }
-    
 }
 
 enum ItunesSearchResultCodingKeys:String, CodingKey {
