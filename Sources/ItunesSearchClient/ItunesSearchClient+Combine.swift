@@ -66,4 +66,12 @@ extension ItunesSearchClient {
         }
         .eraseToAnyPublisher()
     }
+    
+    public func multiPageSearch(request:ItunesSearchRequest) -> MultiPageResults {
+        return MultiPageResults(client: self, baseRequest: request)
+    }
+    
+    public func multiPageTypedSearch<T:ResultItem>(request:ItunesSearchRequest, resultType:T.Type) -> MultiPageTypedResults<T> {
+        return MultiPageTypedResults<T>(client:self, baseRequest:request)
+    }
 }
