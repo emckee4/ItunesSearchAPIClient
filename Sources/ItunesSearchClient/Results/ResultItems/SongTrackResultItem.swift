@@ -9,6 +9,7 @@ import Foundation
 public class SongTrackResultItem: TrackResultItem {
     public let collectionArtistId: Int?
     public let collectionArtistName: String?
+    public let collectionArtistViewUrl: URL?
     public let collectionCensoredName: String?
     public let collectionId: Int?
     public let collectionName: String?
@@ -25,6 +26,7 @@ public class SongTrackResultItem: TrackResultItem {
         let values = try decoder.container(keyedBy: SongTrackCodingKeys.self)
         self.collectionArtistId = try values.decodeIfPresent(Int.self, forKey: .collectionArtistId)
         self.collectionArtistName = try values.decodeIfPresent(String.self, forKey: .collectionArtistName)
+        self.collectionArtistViewUrl = try values.decodeIfPresent(URL.self, forKey: .collectionArtistViewUrl)
         self.collectionCensoredName = try values.decodeIfPresent(String.self, forKey: .collectionCensoredName)
         self.collectionId = try values.decodeIfPresent(Int.self, forKey: .collectionId)
         self.collectionName = try values.decodeIfPresent(String.self, forKey: .collectionName)
@@ -40,7 +42,7 @@ public class SongTrackResultItem: TrackResultItem {
     }
     
     public enum SongTrackCodingKeys:String, CodingKey {
-        case collectionArtistId, collectionArtistName, collectionCensoredName, collectionId, collectionName, collectionViewUrl, discCount, discNumber, isStreamable, previewUrl, trackCount, trackNumber, trackTimeMillis
+        case collectionArtistId, collectionArtistName, collectionArtistViewUrl, collectionCensoredName, collectionId, collectionName, collectionViewUrl, discCount, discNumber, isStreamable, previewUrl, trackCount, trackNumber, trackTimeMillis
     }
     
 }

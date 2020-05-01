@@ -17,7 +17,7 @@ class MusicSearch: NetworkedTests {
         let pathDescription = "\(params)"
         let testExpectation = self.expectation(description:  "Expectation for: " + pathDescription)
         let request = ItunesSearchRequest(term: "history", searchParameters: params)
-        searchClient.searchPublisher(request: request)
+        searchClient.searchPublisherWithDiagnostics(request: request)
             .sink(receiveCompletion: { (result) in
                 if case let .failure(error) = result {
                     XCTFail("Failure with error: \(error)")
@@ -36,7 +36,7 @@ class MusicSearch: NetworkedTests {
         let pathDescription = "\(params)"
         let testExpectation = self.expectation(description:  "Expectation for: " + pathDescription)
         let request = ItunesSearchRequest(term: "history", searchParameters: params)
-        searchClient.searchPublisher(request: request)
+        searchClient.searchPublisherWithDiagnostics(request: request)
                 .sink(receiveCompletion: { (result) in
                     if case let .failure(error) = result {
                         XCTFail("Failure with error: \(error)")
@@ -55,7 +55,7 @@ class MusicSearch: NetworkedTests {
         let pathDescription = "\(params)"
         let testExpectation = self.expectation(description:  "Expectation for: " + pathDescription)
         let request = ItunesSearchRequest(term: "history", searchParameters: params)
-        searchClient.searchPublisher(request: request)
+        searchClient.searchPublisherWithDiagnostics(request: request)
                 .sink(receiveCompletion: { (result) in
                     if case let .failure(error) = result {
                         XCTFail("Failure with error: \(error)")

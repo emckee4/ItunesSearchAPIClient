@@ -19,7 +19,7 @@ final class Lookups: NetworkedTests {
         let pathDescription = "testLookup_itunesId_jackJohnson"
         let testExpectation = self.expectation(description:  "Expectation for: " + pathDescription)
         let request = ItunesLookupRequest(idType:.itunes, ids: ["909253"])
-        searchClient.searchPublisher(request: request)
+        searchClient.searchPublisherWithDiagnostics(request: request)
             .sink(receiveCompletion: { (result) in
                 if case let .failure(error) = result {
                     XCTFail("Failure with error: \(error)")
@@ -60,7 +60,7 @@ final class Lookups: NetworkedTests {
         let pathDescription = "testLookup_amgArtistId_jackJohnson"
         let testExpectation = self.expectation(description:  "Expectation for: " + pathDescription)
         let request = ItunesLookupRequest(idType:.amgArtistId, ids: ["468749"])
-        searchClient.searchPublisher(request: request)
+        searchClient.searchPublisherWithDiagnostics(request: request)
             .sink(receiveCompletion: { (result) in
                 if case let .failure(error) = result {
                     XCTFail("Failure with error: \(error)")
@@ -100,7 +100,7 @@ final class Lookups: NetworkedTests {
         let pathDescription = "testLookupMultiple_amgArtistId"
         let testExpectation = self.expectation(description:  "Expectation for: " + pathDescription)
         let request = ItunesLookupRequest(idType:.amgArtistId, ids: ["468749","5723"])
-        searchClient.searchPublisher(request: request)
+        searchClient.searchPublisherWithDiagnostics(request: request)
             .sink(receiveCompletion: { (result) in
                 if case let .failure(error) = result {
                     XCTFail("Failure with error: \(error)")

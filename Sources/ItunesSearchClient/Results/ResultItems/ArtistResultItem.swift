@@ -10,6 +10,7 @@ import Foundation
 
 public class ArtistResultItem:ResultItem {
     public let amgArtistId: Int?
+    public let amgVideoArtistId: Int?
     public let artistId: Int
     public let artistLinkUrl: URL
     public let artistName: String
@@ -23,6 +24,7 @@ public class ArtistResultItem:ResultItem {
     public required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: ArtistCodingKeys.self)
         self.amgArtistId = try values.decodeIfPresent(Int.self, forKey: .amgArtistId)
+        self.amgVideoArtistId = try values.decodeIfPresent(Int.self, forKey: .amgVideoArtistId)
         self.artistId = try values.decode(Int.self, forKey: .artistId)
         self.artistLinkUrl = try values.decode(URL.self, forKey: .artistLinkUrl)
         self.artistName = try values.decode(String.self, forKey: .artistName)
@@ -33,6 +35,6 @@ public class ArtistResultItem:ResultItem {
     }
     
     enum ArtistCodingKeys:String,CodingKey {
-        case amgArtistId, artistId, artistLinkUrl, artistName, artistType, primaryGenreId, primaryGenreName
+        case amgArtistId, amgVideoArtistId, artistId, artistLinkUrl, artistName, artistType, primaryGenreId, primaryGenreName
     }
 }
