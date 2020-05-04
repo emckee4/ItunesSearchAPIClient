@@ -19,7 +19,7 @@ public class MultiPageResults:ObservableObject {
     var subscriptions:Set<AnyCancellable> = []
     
 
-    func fetch() {
+    public func fetch() {
         guard case let .ready(offset) = status else {
             return
         }
