@@ -18,6 +18,11 @@ public class MultiPageTypedResults<T:ResultItem>:ObservableObject {
     @Published public var error: ItunesSearchError?
     var subscriptions:Set<AnyCancellable> = []
     
+    public func shouldFetchMore(after item:ResultItem) -> Bool {
+        guard let last = results.last else {return false}
+        if case .complete = status {return false}
+        return last.id == item.id
+    }
 
     public func fetch() {
         guard case let .ready(offset) = status else {
